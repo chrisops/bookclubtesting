@@ -1,0 +1,19 @@
+<table>
+    <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genres</th>
+    </tr>
+    <tr>
+        <td>
+        <% if @book != nil && @book.cover_image.attached? %>
+            <%= cl_image_tag @book.cover_image.key, crop: :scale, width: 150, cloud_name: 'bdtech' %>
+        <% end %>
+        <td><%= @book.title %></td>
+        <td><%= @book.author.full_name %></td>
+        <td><%= @book.allgenres %></td>
+    </tr>
+</table>
+<hr>
+<p><%= link_to "Edit", edit_book_path %> | <%= link_to "Back", :back %></p>

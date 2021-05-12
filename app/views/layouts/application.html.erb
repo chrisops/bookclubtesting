@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Week2app</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Rubik:wght@300&display=swap" rel="stylesheet">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <br>
+  
+  <header>
+    <figure> 
+      <img src="http://via.placeholder.com/80" alt="placeholder image">
+      <figcaption>Coder BookClub</figcaption>
+    </figure>
+    <nav>
+      <span><%= link_to "Home", root_path %></span>
+      <span><%= link_to "Books", books_path %></span>
+      <span><%= link_to "Authors", authors_path %></span>
+      <% if user_signed_in? %>
+        <% if policy(Book).create? %> 
+          <span><%= link_to "New Book", new_book_path %></span>
+        <% end %>
+      <% end %>
+      <span><% if user_signed_in? %>
+        <%= current_user.email %>
+        |
+        <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path %>
+        |
+        <%= link_to "Sign Up", new_user_registration_path %>
+      <% end %>
+      </span>
+    </nav>
+  </header>
+  <div class="center">
+  <% if notice %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert"><%= alert %></p>
+  <% end %>
+    <% if flash[:errors] %>
+    <section class="errors">
+      <p class="title">Error:</p>
+      <ul>
+        <% flash[:errors].each do |error| %>
+        <li class="errors"> <%= error %> </li>
+        <% end %>
+      </ul>
+    </section>
+    <% end %>
+    
+    <%= yield %>
+    </div>
+  </body>
+</html>

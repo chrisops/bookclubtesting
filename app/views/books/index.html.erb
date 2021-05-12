@@ -1,0 +1,33 @@
+<h1>List Books</h1>
+
+
+
+<table>
+    <tr>
+        <th>Cover<th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genres</th>
+        <% if policy(Book).edit? || policy(Book).destroy? %> <th>Action</th> <% end %>
+    </tr>
+    <% @books.each do |book| %>
+    <tr>
+        <td>
+        <% if book.cover_image.attached? %>
+         <%= cl_image_tag book.cover_image.key, crop: :scale, width: 60, cloud_name: 'bdtech' %>
+        <% end %>
+        <td><%= link_to book.title, book_path(book) %></td>
+        <td><%= book.author.full_name %></td>
+        <td><%= book.allgenres %></td>
+        <% if policy(Book).edit? || policy(Book).destroy? %>
+        <td>
+        <% if policy(Book).edit? %>
+            <%= link_to "Edit", edit_book_path(book) %> | 
+        <% end %>
+        <% if policy(Book).destroy? %>
+            <%= link_to "Delete", book,method: 'delete', data: {confirm: "Delete #{book.title}?"} %></td>
+        <% end %>
+        <% end %>
+    </tr>
+    <% end %>
+</table>
